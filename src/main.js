@@ -1,3 +1,5 @@
+// import './styles/reset.css'
+import './styles/variables.css'
 import './style.css'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
@@ -12,6 +14,7 @@ async function app() {
       <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
         <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
       </a>
+      <div class="test">test용 추가한 div임</div>
       <h1>Okay</h1>
       <div class="card">
         <button id="counter" type="button"></button>
