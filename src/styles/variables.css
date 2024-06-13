@@ -1,7 +1,7 @@
 :root {
   /* primary */
   --primary: #6d40c8;
-  --primary-50: #6d40c8;
+  --primary-50: #efe5fd;
   --primary-100: #d4bff9;
   --primary-200: #b794f6;
   --primary-300: #9965f4;
@@ -13,16 +13,18 @@
   --primary-900: #0000d6;
 
   /* gray-scale */
-  --gray-100: #f8f9fa;
-  --gray-200: #e9ecef;
-  --gray-300: #dee2e6;
-  --gray-400: #ced4da;
-  --gray-500: #adb5bd;
-  --gray-600: #6c757d;
-  --gray-700: #495057;
-  --gray-800: #343a40;
+
+  --gray-50: #f6fbff;
+  --gray-100: #f1f6fc;
+  --gray-200: #ecf2f7;
+  --gray-300: #dfe5ea;
+  --gray-400: #bdc2c7;
+  --gray-500: #9fa3a9;
+  --gray-600: #757a7f;
+  --gray-700: #61666a;
+  --gray-800: #42464b;
   --gray-900: #212529;
-  
+
   /* z-index  */
   --modal-z-index: 2;
 }
