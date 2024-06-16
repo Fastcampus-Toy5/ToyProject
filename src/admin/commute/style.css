@@ -1,0 +1,146 @@
+:root {
+  --blue: #007bff;
+  --red: #dc3545;
+}
+
+.red {
+  background-color: var(--red);
+  color: var(--gray-200);
+}
+
+.abnormal {
+  color : var(--red)
+}
+
+.blue {
+  background-color: var(--blue);
+  color: var(--gray-200);
+}
+
+.primary {
+  background-color: var(--primary-400);
+  color: var(--gray-200);
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  width: 80%;
+  height: 100%;
+  margin: 20px auto;
+}
+
+.main-content {
+  border-radius: 10px;
+  padding: 20px;
+  padding-top: 0;
+  background-color: var(--gray-300);
+  width: 100%;
+  height: 90vh;
+  overflow-y: auto;
+}
+
+/* header */
+.main-content header {
+  padding-bottom: 20px;
+  background-color: var(--gray-300);
+  position: sticky;
+  top: 0;
+}
+
+.header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-tools {
+  display: flex;
+  justify-content: space-between;
+}
+
+header select {
+  height: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+header .search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 30px;
+}
+
+header input {
+  padding: 8px 10px;
+  outline: none;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+header svg {
+  width: 32px;
+  cursor: pointer;
+}
+
+/* request */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.requests {
+  height: 70%;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.request-header {
+  position: sticky;
+  top: 0;
+  border-top: 4px double;
+  border-bottom: 4px double;
+  font-weight: bold;
+  padding: 10px;
+  background-color: var(--primary-100);
+}
+
+.requests .request-item {
+  background-color: var(--gray-100);
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.request-item-content {
+  display: flex;
+  gap: 12px;
+}
+
+.requests .request-item .type {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.request-date {
+  font-size: 14px;
+}
+
+.request-tools {
+  display: flex;
+  align-items: start;
+  gap: 16px;
+}
+
+.request-tools svg {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
