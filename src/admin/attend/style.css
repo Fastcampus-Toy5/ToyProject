@@ -1,3 +1,23 @@
+:root {
+  --blue: #007bff;
+  --red: #dc3545;
+}
+
+.red {
+  background-color: var(--red) !important;
+  color: var(--gray-200);
+}
+
+.blue {
+  background-color: var(--blue) !important;
+  color: var(--gray-200);
+}
+
+.primary {
+  background-color: var(--primary-400);
+  color: var(--gray-200);
+}
+
 body {
   display: flex;
   align-items: center;
@@ -18,6 +38,7 @@ body {
   overflow-y: auto;
 }
 
+/* header */
 .main-content header {
   padding-bottom: 20px;
   background-color: var(--gray-300);
@@ -25,36 +46,65 @@ body {
   top: 0;
 }
 
-.main-content .header-title {
+.header-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.request-button {
-  background-color: var(--primary-500);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.request-button:hover {
-  background-color: var(--primary-400);
+.header-tools {
+  display: flex;
+  justify-content: space-between;
 }
 
 header select {
+  height: 100%;
   padding: 10px;
   border: none;
   border-radius: 5px;
 }
 
-.requests {
+header .search {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 30px;
+}
+
+header input {
+  padding: 8px 10px;
+  outline: none;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+header svg {
+  width: 32px;
+  cursor: pointer;
+}
+
+/* request */
+.grid {
+  display: grid;
+  grid-template-columns: 96px 2fr 96px 3fr 2fr;
   gap: 10px;
+}
+
+.requests {
+  height: 70%;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.request-header {
+  position: sticky;
+  top: 0;
+  border-top: 4px double;
+  border-bottom: 4px double;
+  font-weight: bold;
+  padding: 10px;
+  background-color: var(--primary-100);
 }
 
 .requests .request-item {
@@ -63,35 +113,30 @@ header select {
   border-radius: 5px;
 }
 
+.request-item-content {
+  display: flex;
+  gap: 12px;
+}
+
 .requests .request-item .type {
   display: inline-block;
-  background-color: var(--primary-400);
-  color: var(--gray-200);
   padding: 5px 10px;
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
-.requests .request-item .request-title {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.requests .request-item .request-reason {
-  margin-bottom: 6px;
-}
-
-.requests .request-item .request-date {
+.request-date {
   font-size: 14px;
-  color: var(--gray-600);
 }
 
-.requests .request-item .modify-button {
-  background-color: transparent;
-  color: var(--primary-300);
-  border: none;
-  padding: 6px 10px;
-  cursor: pointer;  
-  display: block;
-  margin-left: auto;
+.request-tools {
+  display: flex;
+  align-items: start;
+  gap: 16px;
+  color: black;
+}
+
+.request-tools svg {
+  width: 24px;
+  height: 24px;
 }
