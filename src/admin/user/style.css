@@ -1,0 +1,97 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  width: 80%;
+  height: 100%;
+  margin: 20px auto;
+}
+
+.main-content {
+  border-radius: 10px;
+  padding: 20px;
+  padding-top: 0;
+  background-color: var(--gray-300);
+  width: 100%;
+  height: 90vh;
+  overflow-y: auto;
+}
+
+.main-content header {
+  padding-bottom: 20px;
+  background-color: var(--gray-300);
+  position: sticky;
+  top: 0;
+}
+
+.main-content .header-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.request-button {
+  background-color: var(--primary-500);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.request-button:hover {
+  background-color: var(--primary-400);
+}
+
+header select {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.requests {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.requests .request-item {
+  background-color: var(--gray-100);
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.requests .request-item .type {
+  display: inline-block;
+  background-color: var(--primary-400);
+  color: var(--gray-200);
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.requests .request-item .request-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.requests .request-item .request-reason {
+  margin-bottom: 6px;
+}
+
+.requests .request-item .request-date {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.requests .request-item .modify-button {
+  background-color: transparent;
+  color: var(--primary-300);
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;  
+  display: block;
+  margin-left: auto;
+}
