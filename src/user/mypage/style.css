@@ -1,0 +1,307 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* 로고 */
+header {
+  background-color: #f4f4f4;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 20px;
+}
+
+.logo img {
+  height: 150px;  /* 이미지사이즈 */
+}
+
+/* 사이드, 4개의칸 */
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+/* 사이드 */
+.sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.sidebar ul li {
+  margin: 30px 0;
+}
+
+.sidebar ul li:nth-child(1) , 
+.sidebar ul li:nth-child(2) {
+  margin-bottom: 50px; /* 간격을 원하는 크기로 설정 */
+}
+
+.sidebar ul li a {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.sidebar ul li a.intranet {
+  font-size: 30px;
+  font-weight: bold;
+  color: #6d40c8;
+}
+
+.sidebar ul li a.active {
+  font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+  color: var(--primary);
+}
+
+/* 4개칸 */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  padding: 20px;
+  gap: 20px;
+}
+.profile, .status, .announcement, .requests{
+  flex: 1 1 calc(50% - 20px);
+  border: 1px solid #ccc;
+  padding: 20px;
+  min-width: 250px;
+}
+.profile h2, .status h2, .announcement h2, .requests h2 {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* 프로필 */
+
+.profile img {
+  height: 200px;  /* 이미지사이즈 */
+}
+.profile p {
+  margin-bottom: 10px;
+}
+
+/* 현재상태 GPT가 알려준건데,,,, 이해안됨*/
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수평 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.status h2 {
+  margin-bottom: 20px;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  background-color: #fff;
+  border: 4px solid #6d40c8;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+}
+
+.status p .badge {
+  background-color: #6d40c8;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.work-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 버튼들 가운데 정렬 */
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.work-controls .start, .work-controls .stop {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.work-controls .start {
+  background-color: #28a745;
+}
+
+.work-controls .stop {
+  background-color: #dc3545;
+}
+
+.work-controls .start:hover {
+  background-color: #218838;
+}
+
+.work-controls .stop:hover {
+  background-color: #c82333;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 50px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #28a745;
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+
+
+/* 공지사항 */
+
+/* 근태현황 */
+.attendance-list {
+  margin-top: 8px;
+}
+
+.attendance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.attendance-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 15px 0 0 auto;
+  font-size: 14px;
+  margin-top: 50px;
+  float: right;
+}
+
+.attendance-item .badge {
+  background-color: #6d40c8;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* 모달 */
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  justify-content: center;
+  top:0;
+  left:0;
+
+  background-color: rgba(0,0,0,0.4); /* 설명상으론 모달창이 띄어졌을때, 배경화면 흐리게 하는 것이라고 함*/
+}
+
+.modal-profile {
+  position:absolute;
+  top:50%; /*모달을 화면가운데 놓기위함*/
+  left: 50%;
+  padding:40px;  
+
+  width:400px;
+  height:600px;
+
+  text-align: center;
+
+  background-color: rgb(255,255,255); /*모달창 배경색 흰색*/
+  border-radius:10px; /*테두리 */
+  box-shadow:0 2px 3px 0 rgba(34,36,38,0.15); /*테두리 그림자 */
+  /* color: var(--primary); */
+
+  transform:translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+
+}
+
+.modal-profile h2 {
+  margin-bottom: 30px;
+}
+
+.modal-profile ul li {
+  margin-bottom: 30px;
+}
