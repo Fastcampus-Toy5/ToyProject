@@ -1,29 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
+:root {
+    --container-width: 80%
+}
+
 body {
     margin: 0;
     font-family: "Noto Sans KR", sans-serif;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    align-items: center;
-    justify-content: center;
+}
+
+a {
+    text-decoration: none;
 }
 
 header {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 10px 20px;
+    width: var(--container-width);
+    margin: 0 auto;
 }
 
 .logo {
     font-weight: bold;
-    padding: 10px;
-    margin-right: 200px;
     font-size: 30px;
-    text-align: center;
     color: #6d40c8;
 }
 
@@ -31,11 +31,10 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 200px;
+    margin-left: auto;
 }
 
 nav a {
-    text-decoration: none;
     color: #4e4e4e;
     margin: 0 10px;
     font-size: 16px;
@@ -51,4 +50,14 @@ nav img {
     width: 30px;
     height: 30px;
     margin: 20px;
+}
+
+main {
+    width: var(--container-width);
+    margin: 0 auto;
+}
+
+section {
+    height: 100px;
+    background-color: #eee;
 }
