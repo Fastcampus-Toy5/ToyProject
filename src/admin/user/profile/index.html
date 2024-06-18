@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Details</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../profile/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="details">임직원 상세</div>
+    </header>
+    <div class="save-button-container">
+        <button id="edit-btn">정보변경</button>
+    </div>
+    <main>
+        <div class="profile-container">
+            <div class="image-container">
+                <img id="profile-picture" src="https://via.placeholder.com/250x300" alt="Profile Picture">
+            </div>
+            <div class="info">
+                <div class="info-item">
+                    <span class="label">Name:</span>
+                    <span class="value" id="profile-name"></span>
+                </div>
+                <div class="info-item">
+                    <span class="label">ID:</span>
+                    <span class="value" id="profile-id"></span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Type:</span>
+                    <span class="value" id="profile-type"></span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Phone:</span>
+                    <span class="value" id="profile-phone"></span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email:</span>
+                    <span class="value" id="profile-email"></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>정보 변경</h2>
+            <div class="image-container">
+                <img id="modal-profile-picture" src="https://via.placeholder.com/100" alt="Profile Picture">
+                <input type="file" id="modal-image" accept="image/*">
+                <button id="delete-image">이미지 삭제</button>
+            </div>
+            <div class="info-item">
+                <label for="modal-name">Name:</label>
+                <input type="text" id="modal-name">
+            </div>
+            <div class="info-item">
+                <label for="modal-id">ID:</label>
+                <input type="text" id="modal-id">
+            </div>
+            <div class="info-item">
+                <label for="modal-type">Type:</label>
+                <input type="text" id="modal-type">
+            </div>
+            <div class="info-item">
+                <label for="modal-phone">Phone:</label>
+                <input type="text" id="modal-phone">
+            </div>
+            <div class="info-item">
+                <label for="modal-email">Email:</label>
+                <input type="text" id="modal-email">
+            </div>
+            <button id="modal-save">Save</button>
+        </div>
+    </div>
+
+    <script src="../profile/profile.js"></script>
+</body>
+
+</html>
