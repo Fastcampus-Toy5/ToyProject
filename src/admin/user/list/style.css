@@ -17,6 +17,7 @@ a {
     text-decoration: none;
 }
 
+/* header */
 header {
     display: flex;
     align-items: center;
@@ -66,6 +67,7 @@ main {
     height: 870px; 
 }
 
+/* section */
 section {
     background-color: white;
     width: 100%;
@@ -77,14 +79,14 @@ section {
     height: 100%;
 }
 
-.search-container {
+.search-container { /*비숫한 속성끼리 함께 두는 것이 좋습니다. (flex 관련, width관련...*/
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     margin: 10px 0;
     width: 100%;
     max-width: 1200px;
     box-sizing: border-box;
-    justify-content: flex-end;
 }
 
 .search-container input[type="text"] {
@@ -113,9 +115,10 @@ section {
     font-size: 24px;
 }
 
-.pagination {
+.pagination { /*html 순서대로 작성하는 게 일반적입니다. + gap이라는 속성을 쓰면 요소 간격을 쉽게 조절할 수 있습니다.*/
     display: flex;
     align-items: center;
+    /* gap : 10px */
 }
 
 .pagination button {
@@ -134,13 +137,13 @@ section {
 }
 
 .pagination #pageNumber {
-    font-size: 16px;
+    font-size: 16px; /*font-size 기본값이 16px이어서 굳이 안 적어도 상관 없습니다.*/
 }
 
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(auto-fill, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr); /*grip-template은 row나 column는 동시에 둘 중 하나만 쓸 수 있습니다. */
     gap: 15px;
     padding: 15px;
     background-color: #fff;
@@ -148,10 +151,10 @@ section {
     border-radius: 8px;
     overflow-y: auto;
     width: 100%;
-    max-width: calc(100vw * 0.67);
+    /* max-width: calc(100vw * 0.67); 헤더와 세로줄을 맞추기위해 뺴는 것이 좋습니다.*/ 
     box-sizing: border-box;
     align-content: start;
-    flex: 1;
+    /* flex: 1; display : felx 인 경우에만 의미가 있는 속성입니다. */
 }
 .profile-card {
     display: flex;
@@ -195,24 +198,24 @@ section {
     display: block;
 }
 
-.plus-box {
-    display: flex;
-    align-items: center;
+.plus-box { /*profile-card와 중복되는 부분이 많습니다  profile-card에 있는 부분은 뺴는 게 좋을 같아요*/
+    /* display: flex; */
+    /* align-items: center; */
     justify-content: center;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #fafafa;
-    box-sizing: border-box;
-    text-align: center;
+    /* padding: 10px; */
+    /* border: 1px solid #e0e0e0; */
+    /* border-radius: 8px; */
+    /* background-color: #fafafa; */
+    /* box-sizing: border-box; */
+    /* text-align: center; */
     cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    min-height: 250px;
+    /* transition: box-shadow 0.3s ease; */
+    /* min-height: 250px; */
 }
 
-.plus-box:hover {
+/* .plus-box:hover {  profile-card에 hover가 있으니 굳이 필요 없을 것 같아요.
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
+} */
 
 .plus-box .material-icons {
     font-size: 48px;
@@ -220,7 +223,7 @@ section {
 }
 
 .profile-card .info {
-    text-align: center;
+    text-align: left;  /*상위요소에서 수정하면 한 번만 쓰면 되겠죠? */
     padding: 10px;
     width: 100%;
     display: flex;
@@ -239,19 +242,19 @@ section {
 .profile-card .info-item .label {
     font-weight: bold;
     color: #666;
-    text-align: left;
+    /* text-align: left;  상위요소에서 처리*/
     flex: 1;
 }
 
 .profile-card .info-item .value {
     color: #333;
-    text-align: left;
+    /* text-align: left; 상위요소에서 처리*/
     flex: 2;
 }
 
-.profile-card .info .name {
+/* .profile-card .info .name { name이라는 class를 갖는 요소가 없는데요??!
     font-size: 20px;
-}
+} */
 
 /* 모달 창 */
 .modal {
@@ -261,7 +264,7 @@ section {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    /* overflow: auto; overflow가 없어요 */
     background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -272,7 +275,7 @@ section {
     border: 1px solid #888;
     width: 60%;
     max-width: 600px;
-    text-align: center; 
+    text-align: left; /*프로필카드처럼 이것도 left면 족므 더 깔끔하지 않을까요? */ 
     display: flex;
     flex-direction: column;
     align-items: center;
