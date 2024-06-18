@@ -6,6 +6,9 @@ import { STATUS_CODES } from "http";
 import cors from "cors";
 
 import userRouter from './routes/users.js'
+import noticeRouter from './routes/notice.js'
+import commuteRouter from './routes/commute.js'
+import attendRouter from './routes/attend.js'
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -15,8 +18,19 @@ app.use(express.static("dist"));
 app.use(express.json());
 app.use(cors());
 
+const API_URL = {
+  user: "/api/users",
+  notice: "/api/notices",
+  commute: "/api/commutes",
+  attend: "/api/attends"
+}
+
 // route
-app.use("/api/users", userRouter);
+app.use(API_URL.user, userRouter);
+app.use(API_URL.notice, noticeRouter);
+app.use(API_URL.commute, commuteRouter);
+app.use(API_URL.attend, attendRouter);
+
 
 app.get("/api/users.json", (req, res) => {
   fs.readFile("./server/data/users.json", "utf8", (err, data) => {

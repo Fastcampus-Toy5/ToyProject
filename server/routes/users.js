@@ -1,10 +1,13 @@
+import express from "express";
+import db from "../database.js";
+
 const router = express.Router();
 
 /**
  * 사용자 전체조회
  */
 router.get("/", (req, res) => {
-  let sql = `SELECT userId, email, name, team, position, withdraw, isAdmin FROM Users `;
+  let sql = `SELECT userId, email, name, team, position, withdraw, isAdmin, imgUrl FROM Users `;
 
   const { isAdmin } = req.body;
   if (isAdmin !== undefined) sql += ` WHERE isAdmin = $1 `;
@@ -31,7 +34,7 @@ router.get("/:userId", (req, res) => {
   const { userId } = req.params;
 
   const sql =
-    "SELECT userId, email, name, team, position, withdraw, isAdmin FROM Users WHERE userId=$1 ";
+    "SELECT userId, email, name, team, position, withdraw, isAdmin, imgUrl FROM Users WHERE userId=$1 ";
 
   db.all(sql, [userId], (err, rows) => {
     if (err) {
@@ -52,13 +55,13 @@ router.get("/:userId", (req, res) => {
  * 사용자 등록
  */
 router.post("/", (req, res) => {
-  const { userId, password, email, name, team, position, isAdmin } = req.body;
+  const { userId, password, email, name, team, position, isAdmin, imgUrl } = req.body;
 
   try {
     db.run(
-      ` INSERT INTO Users(id, userId, password, email, name, team, position, withdraw, isAdmin) 
-    VALUES((SELECT MAX(id)+1 FROM Users), $1, $2, $3, $4, $5, $6, false, $7) `,
-      [userId, password, email, name, team, position, isAdmin]
+      ` INSERT INTO Users(id, userId, password, email, name, team, position, withdraw, isAdmin, imgUrl) 
+    VALUES((SELECT MAX(id)+1 FROM Users), $1, $2, $3, $4, $5, $6, false, $7, $8) `,
+      [userId, password, email, name, team, position, isAdmin, imgUrl]
     );
 
     res.json({
@@ -78,7 +81,7 @@ router.post("/", (req, res) => {
  * 사용자 수정
  */
 router.put("/", (req, res) => {
-  const { userId, password, email, name, team, position, isAdmin } = req.body;
+  const { userId, password, email, name, team, position, isAdmin, imgUrl } = req.body;
 
   let updateSql = ` UPDATE Users SET `;
   let params = [];
@@ -101,6 +104,9 @@ router.put("/", (req, res) => {
   isAdmin !== undefined &&
     params.push(isAdmin) &&
     (updateSql += ` isAdmin = $${params.length}, `);
+  imgUrl !== undefined &&
+    params.push(imgUrl) &&
+    (updateSql += ` imgUrl = $${params.length}, `);
 
   params.push(userId);
   updateSql += ` userId = $${params.length} WHERE userId = $${params.length} `;
@@ -149,7 +155,7 @@ router.get("/login", (req, res) => {
   const { userId, password } = req.body;
 
   const sql =
-    "SELECT userId, email, name, team, position, isAdmin FROM Users WHERE userId=$1 and password = $2 and withdraw = false";
+    "SELECT userId, email, name, team, position, isAdmin, imgUrl FROM Users WHERE userId=$1 and password = $2 and withdraw = false";
 
   db.all(sql, [userId, password], (err, rows) => {
     if (err) {
