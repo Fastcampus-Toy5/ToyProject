@@ -10,7 +10,8 @@ body {
 }
 
 :root {
-    --container-width: 80%
+    --container-width: 80%;
+    --container-height: 80vh;
 }
 
 a {
@@ -68,6 +69,8 @@ main {
 }
 
 /* section */
+
+/* 검색창 */
 section {
     background-color: white;
     width: 100%;
@@ -79,7 +82,7 @@ section {
     height: 100%;
 }
 
-.search-container { /*비숫한 속성끼리 함께 두는 것이 좋습니다. (flex 관련, width관련...*/
+.search-container { 
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -115,47 +118,24 @@ section {
     font-size: 24px;
 }
 
-.pagination { /*html 순서대로 작성하는 게 일반적입니다. + gap이라는 속성을 쓰면 요소 간격을 쉽게 조절할 수 있습니다.*/
-    display: flex;
-    align-items: center;
-    /* gap : 10px */
-}
-
-.pagination button {
-    padding: 5px 10px;
-    margin: 10px 5px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #adb5bd;
-    color: white;
-}
-
-.pagination button:disabled {
-    background-color: #6d40c8;
-    cursor: not-allowed;
-}
-
-.pagination #pageNumber {
-    font-size: 16px; /*font-size 기본값이 16px이어서 굳이 안 적어도 상관 없습니다.*/
-}
-
+/* 프로필 박스 */
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(auto-fill, 1fr); /*grip-template은 row나 column는 동시에 둘 중 하나만 쓸 수 있습니다. */
+    grid-template-rows: repeat(auto-fill, 1fr);
     gap: 15px;
     padding: 15px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow-y: auto;
+    height: var(--container-height);
     width: 100%;
-    /* max-width: calc(100vw * 0.67); 헤더와 세로줄을 맞추기위해 뺴는 것이 좋습니다.*/ 
+    max-width: calc(100vw * 0.67); /*헤더랑 맞추려면 삭제*/ 
     box-sizing: border-box;
     align-content: start;
-    /* flex: 1; display : felx 인 경우에만 의미가 있는 속성입니다. */
 }
+
 .profile-card {
     display: flex;
     flex-direction: column;
@@ -198,24 +178,10 @@ section {
     display: block;
 }
 
-.plus-box { /*profile-card와 중복되는 부분이 많습니다  profile-card에 있는 부분은 뺴는 게 좋을 같아요*/
-    /* display: flex; */
-    /* align-items: center; */
+.plus-box { 
     justify-content: center;
-    /* padding: 10px; */
-    /* border: 1px solid #e0e0e0; */
-    /* border-radius: 8px; */
-    /* background-color: #fafafa; */
-    /* box-sizing: border-box; */
-    /* text-align: center; */
     cursor: pointer;
-    /* transition: box-shadow 0.3s ease; */
-    /* min-height: 250px; */
 }
-
-/* .plus-box:hover {  profile-card에 hover가 있으니 굳이 필요 없을 것 같아요.
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-} */
 
 .plus-box .material-icons {
     font-size: 48px;
@@ -223,7 +189,7 @@ section {
 }
 
 .profile-card .info {
-    text-align: left;  /*상위요소에서 수정하면 한 번만 쓰면 되겠죠? */
+    text-align: left;
     padding: 10px;
     width: 100%;
     display: flex;
@@ -242,29 +208,43 @@ section {
 .profile-card .info-item .label {
     font-weight: bold;
     color: #666;
-    /* text-align: left;  상위요소에서 처리*/
     flex: 1;
 }
 
 .profile-card .info-item .value {
     color: #333;
-    /* text-align: left; 상위요소에서 처리*/
     flex: 2;
 }
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    align-items: center;
+}
 
-/* .profile-card .info .name { name이라는 class를 갖는 요소가 없는데요??!
-    font-size: 20px;
-} */
+.pagination button {
+    padding: 5px 10px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #adb5bd;
+    color: white;
+}
+
+.pagination button:disabled {
+    background-color: #6d40c8;
+    cursor: not-allowed;
+}
 
 /* 모달 창 */
 .modal {
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    /* overflow: auto; overflow가 없어요 */
     background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -275,7 +255,7 @@ section {
     border: 1px solid #888;
     width: 60%;
     max-width: 600px;
-    text-align: left; /*프로필카드처럼 이것도 left면 족므 더 깔끔하지 않을까요? */ 
+    text-align: left;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -305,8 +285,6 @@ section {
     text-decoration: none;
     cursor: pointer;
 }
-
-
 
 .info-item label {
     display: inline-block;

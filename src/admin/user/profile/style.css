@@ -1,7 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     margin: 0;
-    padding: 0;
     background-color: #f0f0f0;
     display: flex;
     flex-direction: column;
@@ -20,14 +19,13 @@ header {
     position: relative;
 }
 
+/* 정보변경 버튼 */
 .save-button-container {
     display: flex;
-    align-items: center;
-    margin: 30px 0;
-    width: 100%;
-    max-width: 1200px;
-    box-sizing: border-box;
     justify-content: flex-end;
+    margin: 20px 0;
+    width: 62%;
+    box-sizing: border-box;
 }
 
 #edit-btn {
@@ -38,10 +36,10 @@ header {
     border-radius: 4px;
     cursor: pointer;
 }
-
+/* 프로필 상세 */
 main {
     width: 100%;
-    max-width: 1200px;
+    max-width: 68%;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -62,20 +60,16 @@ main {
     height: 700px;
     text-align: left;
     position: relative;
-    margin-bottom: 50px; 
+    margin-bottom: 50px;
 }
 
 .image-container {
+    width: 250px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 1;
-}
-
-.profile-container img {
-    width: 200px;
-    height: 250px;
-    margin-bottom: 10px;
 }
 
 .info {
@@ -89,23 +83,24 @@ main {
 .info-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: left;
 }
 
 .label {
     font-weight: bold;
     color: #666;
-    min-width: 100px;
-    text-align: left;
     flex: 1;
 }
 
 .value {
     color: #333;
-    text-align: left;
     margin-left: -50px;
     flex: 2;
 }
 
+/* 정보변경 모달 */
 #modal {
     display: none;
     position: fixed;
@@ -114,82 +109,68 @@ main {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
-    padding: 20px;
+    padding: 1%;
     border: 1px solid #888;
     width: 60%;
     max-width: 600px;
-    text-align: center; 
-    border-radius: 8px;
+    text-align: left;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-}
-
-.modal-content h2 {
-    margin-top: 0;
-}
-
-.modal-content .image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
+    font-size: 16px; 
 }
 
 .modal-content .image-container img {
-    width: 100px;
-    height: 100px;
+    width: 70%;
+    height:100%;
+    object-fit: cover;
     margin-bottom: 10px;
 }
 
-.modal-content .image-container input,
+.modal-content .image-container {
+    margin-bottom: 20px;
+}
+
 .modal-content .image-container button {
-    margin-top: 5px;
+    margin-top: 10px;
+    width: 30%; 
+    text-align: center; 
+    border-radius: 4px; 
+}
+
+.modal-info {
+    margin: 20px;
 }
 
 .modal-content .info-item {
     display: flex;
-    align-items: center;
+    align-items: center; 
     justify-content: center; 
     margin-bottom: 20px;
     width: 100%;
+    gap: 50px;
 }
 
 .modal-content .info-item label {
-    font-weight: bold;
-    color: #666;
-    min-width: 100px;
-    text-align: right; 
-    margin-right: 10px;
+    width: 10%;
 }
 
-.modal-content .info-item input {
-    flex: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    text-align: left;
-    width: 60%
-}
-
+/* close버튼 */
 .close {
     position: absolute;
     top: 10px;
     right: 10px;
-    color: #aaa;
+    color: #666;
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: black;
