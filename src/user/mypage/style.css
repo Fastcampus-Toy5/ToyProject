@@ -268,3 +268,46 @@ input:checked + .slider:before {
 .attends-button:hover {
   background-color: yellowgreen;
 }
+
+
+/* 모달 GPT꺼니까 다시 스스로 해보기 */
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  justify-content: center;
+  top:0;
+  left:0;
+
+  background-color: rgba(0,0,0,0.4); /* 설명상으론 모달창이 띄어졌을때, 배경화면 흐리게 하는 것이라고 함*/
+}
+
+.modal-profile {
+  position:absolute;
+  top:50%; /*모달을 화면가운데 놓기위함*/
+  left: 40%;
+  padding:40px;  
+
+  width:400px;
+  height:600px;
+
+  text-align: center;
+
+  background-color: rgb(255,255,255); /*모달창 배경색 흰색*/
+  border-radius:10px; /*테두리 */
+  box-shadow:0 2px 3px 0 rgba(34,36,38,0.15); /*테두리 그림자 */
+  /* color: var(--primary); */
+
+  transform:translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+
+}
+
+.modal-profile h2 {
+  margin-bottom: 30px;
+}
+
+.modal-profile ul li {
+  margin-bottom: 30px;
+}
