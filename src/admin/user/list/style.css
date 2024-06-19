@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 body {
     font-family: "Noto Sans KR", sans-serif;
@@ -6,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 :root {
@@ -119,10 +120,15 @@ section {
 }
 
 /* 프로필 박스 */
+:root {
+    --container-width: 80%;
+    --container-height: 80vh;
+}
+
+/* 기본 스타일 */
 .container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(auto-fill, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 15px;
     padding: 15px;
     background-color: #fff;
@@ -131,10 +137,11 @@ section {
     overflow-y: auto;
     height: var(--container-height);
     width: 100%;
-    max-width: calc(100vw * 0.67); /*헤더랑 맞추려면 삭제*/ 
+    max-width: calc(100vw * 0.7); /*헤더랑 맞추려면 삭제*/ 
     box-sizing: border-box;
     align-content: start;
 }
+
 
 .profile-card {
     display: flex;
@@ -214,6 +221,9 @@ section {
 .profile-card .info-item .value {
     color: #333;
     flex: 2;
+    white-space: nowrap;
+    overflow: hidden;   
+    text-overflow: ellipsis; 
 }
 /* 페이지네이션 */
 .pagination {
@@ -290,3 +300,5 @@ section {
     display: inline-block;
     width: 100px;
 }
+
+

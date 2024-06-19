@@ -7,7 +7,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 header {
@@ -24,7 +24,7 @@ header {
     display: flex;
     justify-content: flex-end;
     margin: 20px 0;
-    width: 62%;
+    width: 50%;
     box-sizing: border-box;
 }
 
@@ -36,6 +36,7 @@ header {
     border-radius: 4px;
     cursor: pointer;
 }
+
 /* 프로필 상세 */
 main {
     width: 100%;
@@ -48,8 +49,10 @@ main {
     position: relative;
 }
 
+/* 프로필 컨테이너 */
 .profile-container {
     display: flex;
+    flex-direction: column; /* 컨테이너를 열 방향으로 설정 */
     align-items: center;
     padding: 20px;
     border: 1px solid #e0e0e0;
@@ -57,32 +60,45 @@ main {
     background-color: #fafafa;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
-    height: 700px;
+    max-width: 1000px; /* 큰 화면에서는 최대 너비 설정 */
     text-align: left;
     position: relative;
     margin-bottom: 50px;
+    transition: transform 0.3s ease; /* 스케일 변환을 위한 부드러운 전환 효과 */
 }
 
+/* 이미지 컨테이너 */
 .image-container {
     width: 250px;
     height: 300px;
     display: flex;
+    margin-bottom: 30px;
     flex-direction: column;
     align-items: center;
     flex: 1;
 }
 
+/* 이미지 설정 */
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 정보 섹션 */
 .info {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: 20px;
-    margin-left: 20px;
     flex: 2;
+    width: 100%; 
+    box-sizing: border-box;
 }
 
 .info-item {
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     width: 100%;
     text-align: left;
@@ -96,8 +112,10 @@ main {
 
 .value {
     color: #333;
-    margin-left: -50px;
     flex: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 정보변경 모달 */
