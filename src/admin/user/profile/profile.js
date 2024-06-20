@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (params.name) {
         document.getElementById('profile-picture').src = params.picture || 'https://via.placeholder.com/250x300';
         document.getElementById('profile-name').textContent = params.name;
-        document.getElementById('profile-id').textContent = params.id;
-        document.getElementById('profile-type').textContent = params.type;
-        document.getElementById('profile-phone').textContent = params.phone;
+        document.getElementById('profile-userId').textContent = params.userId;
+        document.getElementById('profile-team').textContent = params.team;
+        document.getElementById('profile-position').textContent = params.position;
         document.getElementById('profile-email').textContent = params.email;
     }
 
@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     editBtn.onclick = function() {
         document.getElementById('modal-name').value = document.getElementById('profile-name').textContent;
-        document.getElementById('modal-id').value = document.getElementById('profile-id').textContent;
-        document.getElementById('modal-type').value = document.getElementById('profile-type').textContent;
-        document.getElementById('modal-phone').value = document.getElementById('profile-phone').textContent;
+        document.getElementById('modal-userId').value = document.getElementById('profile-userId').textContent;
+        document.getElementById('modal-team').value = document.getElementById('profile-team').textContent;
+        document.getElementById('modal-position').value = document.getElementById('profile-position').textContent;
         document.getElementById('modal-email').value = document.getElementById('profile-email').textContent;
         modal.style.display = "block";
     }
@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("modal-save").onclick = function() {
         document.getElementById('profile-name').textContent = document.getElementById('modal-name').value;
-        document.getElementById('profile-id').textContent = document.getElementById('modal-id').value;
-        document.getElementById('profile-type').textContent = document.getElementById('modal-type').value;
-        document.getElementById('profile-phone').textContent = document.getElementById('modal-phone').value;
+        document.getElementById('profile-userId').textContent = document.getElementById('modal-userId').value;
+        document.getElementById('profile-team').textContent = document.getElementById('modal-team').value;
+        document.getElementById('profile-position').textContent = document.getElementById('modal-position').value;
         document.getElementById('profile-email').textContent = document.getElementById('modal-email').value;
 
         if (fileInput.files && fileInput.files[0]) {

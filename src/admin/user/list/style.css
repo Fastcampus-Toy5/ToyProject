@@ -119,12 +119,6 @@ section {
     font-size: 24px;
 }
 
-/* 프로필 박스 */
-:root {
-    --container-width: 80%;
-    --container-height: 80vh;
-}
-
 /* 기본 스타일 */
 .container {
     display: grid;
@@ -209,7 +203,6 @@ section {
     justify-content: flex-start;
     width: 80%;
     max-width: 400px;
-    margin-bottom: 1px;
 }
 
 .profile-card .info-item .label {
@@ -222,7 +215,8 @@ section {
     color: #333;
     flex: 2;
     white-space: nowrap;
-    overflow: hidden;   
+    overflow: hidden;
+    margin-bottom: 2px;
     text-overflow: ellipsis; 
 }
 /* 페이지네이션 */

@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function addProfileCard() {
         // 새로운 프로필 정보를 모달에서 가져오기
         const name = document.getElementById('modal-name').value;
-        const id = document.getElementById('modal-id').value;
-        const type = document.getElementById('modal-type').value;
-        const phone = document.getElementById('modal-phone').value;
+        const userId = document.getElementById('modal-userId').value;
+        const team = document.getElementById('modal-team').value;
+        const position = document.getElementById('modal-position').value;
         const email = document.getElementById('modal-email').value;
         const imageInput = document.getElementById('modal-image');
         let imageUrl = 'https://via.placeholder.com/100'; // 기본 이미지
@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const reader = new FileReader();
             reader.onload = function(e) {
                 imageUrl = e.target.result;
-                createProfileCard(name, id, type, phone, email, imageUrl);
+                createProfileCard(name, userId, team, position, email, imageUrl);
             };
             reader.readAsDataURL(imageInput.files[0]);
         } else {
-            createProfileCard(name, id, type, phone, email, imageUrl);
+            createProfileCard(name, userId, team, position, email, imageUrl);
         }
 
         // 모달 창 닫기
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 새로운 프로필 카드 생성
-    function createProfileCard(name, id, type, phone, email, imageUrl) {
+    function createProfileCard(name, userId, team, position, email, imageUrl) {
         const newProfileCard = document.createElement('div');
         newProfileCard.className = 'profile-card';
         newProfileCard.innerHTML = `
@@ -101,23 +101,23 @@ document.addEventListener('DOMContentLoaded', function() {
             <img src="${imageUrl}" alt="Profile Picture">
             <div class="info">
                 <div class="info-item">
-                    <span class="label">Name :</span>
+                    <span class="label">이름 :</span>
                     <span class="value">${name}</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">ID :</span>
-                    <span class="value">${id}</span>
+                    <span class="label">사번 :</span>
+                    <span class="value">${userId}</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">Type :</span>
-                    <span class="value">${type}</span>
+                    <span class="label">팀 :</span>
+                    <span class="value">${team}</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">Phone :</span>
-                    <span class="value">${phone}</span>
+                    <span class="label">직급 :</span>
+                    <span class="value">${position}</span>
                 </div>
                 <div class="info-item">
-                    <span class="label">Email :</span>
+                    <span class="label">이메일 :</span>
                     <span class="value">${email}</span>
                 </div>
             </div>
@@ -135,9 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
         newProfileCard.addEventListener('click', function() {
             const profileInfo = {
                 name: newProfileCard.querySelector('.info-item:nth-child(1) .value').textContent,
-                id: newProfileCard.querySelector('.info-item:nth-child(2) .value').textContent,
-                type: newProfileCard.querySelector('.info-item:nth-child(3) .value').textContent,
-                phone: newProfileCard.querySelector('.info-item:nth-child(4) .value').textContent,
+                userId: newProfileCard.querySelector('.info-item:nth-child(2) .value').textContent,
+                team: newProfileCard.querySelector('.info-item:nth-child(3) .value').textContent,
+                position: newProfileCard.querySelector('.info-item:nth-child(4) .value').textContent,
                 email: newProfileCard.querySelector('.info-item:nth-child(5) .value').textContent
             };
             const profileQueryString = new URLSearchParams(profileInfo).toString();
@@ -180,9 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!event.target.classList.contains('close-button')) {
                 const profileInfo = {
                     name: card.querySelector('.info-item:nth-child(1) .value').textContent,
-                    id: card.querySelector('.info-item:nth-child(2) .value').textContent,
-                    type: card.querySelector('.info-item:nth-child(3) .value').textContent,
-                    phone: card.querySelector('.info-item:nth-child(4) .value').textContent,
+                    userId: card.querySelector('.info-item:nth-child(2) .value').textContent,
+                    team: card.querySelector('.info-item:nth-child(3) .value').textContent,
+                    position: card.querySelector('.info-item:nth-child(4) .value').textContent,
                     email: card.querySelector('.info-item:nth-child(5) .value').textContent
                 };
                 const profileQueryString = new URLSearchParams(profileInfo).toString();
@@ -257,9 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (params.name) {
         document.getElementById('profile-picture').src = params.picture || 'https://via.placeholder.com/250x300';
         document.getElementById('profile-name').textContent = params.name;
-        document.getElementById('profile-id').textContent = params.id;
-        document.getElementById('profile-type').textContent = params.type;
-        document.getElementById('profile-phone').textContent = params.phone;
+        document.getElementById('profile-userId').textContent = params.userId;
+        document.getElementById('profile-team').textContent = params.team;
+        document.getElementById('profile-position').textContent = params.position;
         document.getElementById('profile-email').textContent = params.email;
     }
 
@@ -270,9 +270,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     editBtn.onclick = function() {
         document.getElementById('modal-name').value = document.getElementById('profile-name').textContent;
-        document.getElementById('modal-id').value = document.getElementById('profile-id').textContent;
-        document.getElementById('modal-type').value = document.getElementById('profile-type').textContent;
-        document.getElementById('modal-phone').value = document.getElementById('profile-phone').textContent;
+        document.getElementById('modal-userId').value = document.getElementById('profile-userId').textContent;
+        document.getElementById('modal-team').value = document.getElementById('profile-team').textContent;
+        document.getElementById('modal-position').value = document.getElementById('profile-position').textContent;
         document.getElementById('modal-email').value = document.getElementById('profile-email').textContent;
         modal.style.display = "block";
     }
@@ -289,9 +289,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("modal-save").onclick = function() {
         document.getElementById('profile-name').textContent = document.getElementById('modal-name').value;
-        document.getElementById('profile-id').textContent = document.getElementById('modal-id').value;
-        document.getElementById('profile-type').textContent = document.getElementById('modal-type').value;
-        document.getElementById('profile-phone').textContent = document.getElementById('modal-phone').value;
+        document.getElementById('profile-userId').textContent = document.getElementById('modal-userId').value;
+        document.getElementById('profile-team').textContent = document.getElementById('modal-team').value;
+        document.getElementById('profile-position').textContent = document.getElementById('modal-position').value;
         document.getElementById('profile-email').textContent = document.getElementById('modal-email').value;
 
         if (fileInput.files && fileInput.files[0]) {
