@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>근태신청 내역</title>
+    <link rel="stylesheet" href="../../styles/variables.css" />
+    <link rel="stylesheet" href="../../header/style.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">Intranet</div>
+      <nav>
+        <a href="#">공지사항</a>
+        <a href="#">직원정보</a>
+        <a href="#">출결정보</a>
+        <a href="#">근태관리</a>
+        <a href="#">근태현황</a>
+        <a href="#2">마이페이지</a>
+        <img src="../../header/image.jpg" alt="사진임" />
+      </nav>
+    </header>
+
+    <main>
+      <section class="main-content">
+        <header class="main-content-header">
+          <div class="header-title">
+            <h1>근태신청 내역</h1>
+            <button class="request-button">근태신청</button>
+          </div>
+          <select>
+            <option value="all">모두보기</option>
+            <option value="leave">연차</option>
+            <option value="halfday">반차</option>
+            <option value="absent">조퇴</option>
+          </select>
+        </header>
+
+        <div class="requests">
+          <div class="request-item">
+            <span class="type">연차</span>
+            <h2 class="request-title">휴가신청합니다</h2>
+            <p class="request-reason">휴가 중 연락마쇼</p>
+            <span class="request-date"> 2024-02-09 ~ 2024-02-29 </span>
+            <button class="modify-button">수정하기</button>
+          </div>
+          <div class="request-item">
+            <span class="type">반차</span>
+            <h2 class="request-title">일하기 싫어</h2>
+            <p class="request-reason">집 갈래</p>
+            <span class="request-date"> 2024-02-09</span>
+            <button class="modify-button" disabled>수정하기</button>
+          </div>
+          <div class="request-item">
+            <span class="type">조퇴</span>
+            <h2 class="request-title">파업 1일차</h2>
+            <p class="request-reason">집감 ㅅㄱ</p>
+            <span class="request-date">2024-02-09</span>
+            <button class="modify-button" disabled>수정하기</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
