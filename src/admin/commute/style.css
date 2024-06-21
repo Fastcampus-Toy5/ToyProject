@@ -35,15 +35,14 @@
 
 /* header */
 .main-content-header {
+  display: block;
   width: 100%;
   margin: 0;
+margin-bottom: 30px;
 }
 
 .header-title {
   margin-bottom: 20px;
-}
-
-.header-tools {
   display: flex;
   justify-content: space-between;
   gap: 12px;
@@ -60,7 +59,6 @@ header .search {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 30px;
 }
 
 header input {
