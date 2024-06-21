@@ -67,6 +67,11 @@ main {
 }
 
 section {
+<<<<<<< HEAD
+    /* height: 100px; */
+    /* background-color: #eee; */
+}
+=======
     height: 100px;
     background-color: #eee;
 }
@@ -119,3 +124,4 @@ nav a:hover {
 
 
 }
+>>>>>>> 484cdbd85e3eed58fe0d87f920650c03324f51d7

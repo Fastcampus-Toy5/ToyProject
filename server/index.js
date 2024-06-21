@@ -1,83 +1,62 @@
-import express from 'express'
-import morgan from 'morgan'
-import fs from 'fs'
-import db from './database.js'
+import express from "express";
+import morgan from "morgan";
+import fs from "fs";
+import db from "./database.js";
+import { STATUS_CODES } from "http";
+import cors from "cors";
 
-const THRESHOLD = 2000
-const port = process.env.PORT || 8080
-const app = express()
+import userRouter from './routes/users.js'
+import noticeRouter from './routes/notice.js'
+import commuteRouter from './routes/commute.js'
+import attendRouter from './routes/attend.js'
 
-app.use((req, res, next) => {
-  const delayTime = Math.floor(Math.random() * THRESHOLD)
+const port = process.env.PORT || 8080;
+const app = express();
 
-  setTimeout(() => {
-    next();
-  }, delayTime);
-})
+app.use(morgan("dev"));
+app.use(express.static("dist"));
+app.use(express.json());
+app.use(cors());
 
-app.use(morgan('dev'))
-app.use(express.static('dist'))
-app.use(express.json())
+const API_URL = {
+  user: "/api/users",
+  notice: "/api/notices",
+  commute: "/api/commutes",
+  attend: "/api/attends"
+}
 
-app.get('/api/counter', (req, res) => {
-  const counter = Number(req.query.latest)
+// route
+app.use(API_URL.user, userRouter);
+app.use(API_URL.notice, noticeRouter);
+app.use(API_URL.commute, commuteRouter);
+app.use(API_URL.attend, attendRouter);
 
-  if (Math.floor(Math.random() * 10) <= 3) {
-    res.status(400).send({
-      status: 'Error',
-      data: null,
-    })
-  } else {
-    res.status(200).send({
-      status: 'OK',
-      data: counter + 1,
-    })
-  }
-})
 
-app.get('/api/users.json', (req, res) => {
-  fs.readFile('./server/data/users.json', 'utf8', (err, data) => {
+app.get("/api/users.json", (req, res) => {
+  fs.readFile("./server/data/users.json", "utf8", (err, data) => {
     if (err) {
-        console.error('Error reading JSON file:', err)
-        return res.status(500).send({ 
-          status: 'Internal Server Error',
-          message: err,
-          data: null,
-        })
+      console.error("Error reading JSON file:", err);
+      return res.status(500).send({
+        status: "Internal Server Error",
+        message: err,
+        data: null,
+      });
     }
 
     try {
-        const jsonData = JSON.parse(data)
-        res.json(jsonData)
+      const jsonData = JSON.parse(data);
+      res.json(jsonData);
     } catch (parseErr) {
-        console.error('Error parsing JSON file:', parseErr)
-        return res.status(500).send({ 
-          status: 'Internal Server Error',
-          message: parseErr,
-          data: null,
-        })
+      console.error("Error parsing JSON file:", parseErr);
+      return res.status(500).send({
+        status: "Internal Server Error",
+        message: parseErr,
+        data: null,
+      });
     }
-  })
-})
-
-app.get('/api/users', (req, res) => {
-  const sql = 'SELECT * FROM Users'
-
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ 
-        status: 'Error',
-        error: err.message
-      })
-    }
-
-    res.json({ 
-      status: 'OK',
-      data: rows 
-    })
-  })
-})
+  });
+});
 
 app.listen(port, () => {
-  console.log(`ready to ${port}`)
-})
+  console.log(`ready to ${port}`);
+});
