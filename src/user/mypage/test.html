@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../styles/reset.css">
+  <link rel="stylesheet" href="../../styles/variables.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- 로고 -->
+    <header>
+      <div class="logo">
+        <img src="./img/logo.jpg" alt="Logo"> <!-- 로고 이미지 경로를 올바르게 설정하세요 -->
+    </header>
+
+    <!-- 사이드바(메뉴) -->
+    <div class="main-content">
+      <nav class="sidebar">
+        <ul>
+          <li><a href="#" class="intranet">INTRANET</a></li>
+          <li><a href="#">User</a></li>
+          <li><a href="./index.html">마이페이지</a></li>
+          <li><a href="./test.html" class="active">출퇴근관리</a></li>
+          <li><a href="#">근태현황</a></li>
+          <li><a href="#">공지사항</a></li>
+        </ul>
+      </nav>
+      <!-- 4개칸 -->
+      <main class="content">
+      <!-- 프로필 -->
+      <div class="profile">
+        <h2>프로필</h2>
+        <img src="./img/logo.jpg" alt="프로필사진">
+        <p>홍길동</p>
+        <p>Email: test@baedal.com</p>
+        <p>직급: 부장</p>
+        <p>사번: 123456</p>
+        <p>전화번호: 010-1234-5678</p>
+      </div>
+      <!-- 현재상태 -->
+     <div class="status">
+      <h2>출결상태</h2>
+      <div class="timer">
+        <span id="timer">00:00:00</span>
+      </div>
+      <p>현재상태: <span class="badge">근무중</span></p>
+      <div class="work-controls">
+        <button class="start">근무시작</button>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        <button class="stop">근무종료</button>
+      </div>
+    </div>
+      <!-- 공지사항 -->
+      <div class="announcement">
+        <h2>공지사항</h2>
+        <p>공지사항 내용 1</p>
+        <p>공지사항 내용 2</p>
+        <p>공지사항 내용 3</p>
+      </div>
+      <!-- 근태현황  -->
+      <div class="requests">
+      <h2>근태현황</h2>
+        <div class="attendance-list">
+          <div class="attendance-item">
+          <span class="badge">조퇴</span>
+          <span>신청</span>
+          <span>홍길동</span>
+          </div>
+          <div class="attendance-item">
+            <span class="badge">연차</span>
+            <span>휴가신청합니다</span>
+            <span>박부장</span>
+          </div>
+          <div class="attendance-item">
+            <span class="badge">반차</span>
+            <span>신청합니다</span>
+            <span>홍길동</span>
+          </div>
+        </div>
+        <button class="attendance-button">근태현황 바로가기</button>
+      </div>
+      </main>
+      
+
+
+
+    </div>
+  </div>
+</body>
+</html>
