@@ -30,33 +30,27 @@
 }
 
 /* header */
-.main-content header {
+.main-content-header {
+  display: block;
   width: 100%;
   margin: 0;
+  margin-bottom: 20px;
+
 }
 
 .header-title {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.header-tools {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-header select {
-  height: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-}
-
-header .search {
+.main-content-header .search {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 30px;
 }
 
 header input {
@@ -69,6 +63,12 @@ header input {
 header svg {
   width: 32px;
   cursor: pointer;
+}
+
+header select {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
 
 /* request */
