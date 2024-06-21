@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마이페이지</title>
+  
+  <!-- 정해진것 -->
+  <link rel="stylesheet" href="../../styles/reset.css">
+  <link rel="stylesheet" href="../../styles/variables.css">
+  <!-- 헤더스타일 -->
+  <link rel="stylesheet" href="../../header/style.css">
+  <!-- 이 HTML에 대한 스타일  -->
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+
+<body>
+  <div class="container">
+
+    <!-- 상단메뉴 -->
+    <header>
+      <div class="logo">Intranet</div>
+      <nav>
+        <a href="#">공지사항</a>
+        <a href="#">직원정보</a>
+        <a href="#">출결정보</a>
+        <a href="#">근태관리</a>
+        <a href="#">근태현황</a>
+        <a href="#2">마이페이지</a>
+        <img src="../../header/image.jpg" alt="사진임">
+      </nav>
+    </header>
+
+    <!-- 마이페이지(프로필,출퇴근,공지사항,근태관리) -->
+    <main>
+      <section class="content-container">
+        
+        <!-- 프로필 -->
+        <div class="profile content">
+          <h2>프로필</h2>
+          <img src="./img/logo.jpg" alt="프로필사진">
+          <p>홍길동</p>
+          <p>Email : 배달의 민족@intranet.com</p>
+          <p>직급: 품질환경부서 부장</p>
+          <p>사번: 123456</p>
+          <p>전화번호: 010-1234-5678</p>
+          <button class="open-modal-btn btn">프로필 수정하기</button>
+        </div>
+
+        <!-- 공지사항 -->
+        <div class="notices content">
+          <h2>공지사항</h2>
+          <p>공지사항 내용 1</p>
+          <p>공지사항 내용 2</p>
+          <p>공지사항 내용 3</p>
+        </div>
+
+
+        <!-- 출퇴근 -->
+        <div class="commutes content">
+          <h2> 출퇴근현황</h2>
+          <div class="work-timer">
+            <div class="timer">
+              <span id="timer">00:00:00</span>
+            </div>
+            <p> 현시각 : <span class="badge">근무중</span></p>
+            <div class="work-controls">
+              <button class="start-btn btn">근무시작</button>
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+              <button class="stop-btn btn">근무종료</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 근태 -->
+        <div class="attends content">
+          <h2>근태현황</h2>
+            <div class="attends-list">
+              <div class="attends-header">
+                <span>구분</span>
+                <span>날짜</span>
+                <span>내용</span>
+                <span>이름</span>
+              </div>
+              <div class="attends-item">
+                <span class="badge">조퇴</span>
+                <span>6/19</span>
+                <span>병원내원</span>
+                <span>홍길동</span>
+                </div>
+              <div class="attends-item">
+                <span class="badge">연차</span>
+                <span>6/19~6/23</span>
+                <span>여름휴가</span>
+                <span>박부장</span>
+              </div>
+              <div class="attends-item">
+                <span class="badge">반차</span>
+                <span>6/21</span>
+                <span>아파</span>
+                <span>홍길동</span>
+              </div>
+            </div>
+            
+            <a href="./now.html"><button class="attends-btn btn">근태신청 바로가기</button></a>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+
+  <!-- 모달  -->
+  <div class="modal">
+    <div class="modal-profile">
+      <h2>프로필 수정</h2>
+      <ul>
+        <li>이름</li>
+        <li>이메일</li>
+        <li>직급</li>
+        <li>전화번호</li>
+        <li>선아님 코드로 넣기, 성현님이 주신 변수명으로 적용해보기</li>
+        <button class="close-modal-btn btn">수정완료</button>
+    </div>
+  </div>
+
+
+
+  <!-- 모달인데 몰라,,,,, GPT가 알려준건데 일단 작성 -->
+  <script>
+    const modal = document.querySelector('.modal');
+    const btnOpenModal=document.querySelector('.open-modal-btn');
+    const btnCloseModal=document.querySelector('.close-modal-btn')
+
+    btnOpenModal.addEventListener("click", ()=>{
+        modal.style.display="block";    
+    });
+    btnCloseModal.addEventListener("click", ()=>{
+        modal.style.display="none";    
+    });
+  </script>
+
+
+</body>
+</html>

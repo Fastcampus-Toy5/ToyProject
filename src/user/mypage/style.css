@@ -1,0 +1,298 @@
+/* 기본 스타일 */
+.container {
+  margin: 0 auto;
+  height: 100vh; /* 전체 화면 높이 */
+  /* background-color: aqua; */
+}
+
+
+/* 마이페이지(프로필,출퇴근,공지사항,근태관리)  */
+.content-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* 2열 구성 */
+  grid-template-rows: 1fr 2fr; /* 2행 구성 */
+  gap: 20px;
+  padding: 30px;
+  background-color: #eee;
+  height: 80vh;
+  /* overflow: auto; 회색배경이 감싸도록 하고 싶은데 스크롤이 발생이 됨 */
+}
+ 
+.content  {
+  padding: 20px;
+  background-color: #fff;
+  border: 3px solid var(--primary);
+  box-sizing: border-box;
+  min-width: 250px;
+  border-radius: 10px;
+  /* overflow: auto; */
+}
+
+
+.content h2  {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* 개별 그리드 아이템 간격 설정 */
+.profile {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.notices {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.commutes {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.attends {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+
+/* 버튼공통 */
+.btn {
+  padding: 5px 10px; 
+  border: none;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+/* 프로필 */
+
+.profile img {
+  width: 113.3px;
+  height: 151.1px;  /* 이미지사이즈 */
+  margin-bottom: 20px;
+}
+
+.profile p {
+  margin-bottom: 20px;
+}
+
+.open-modal-btn {
+  background-color: var(--primary-300);
+  border-radius: 15px;
+}
+
+.open-modal-btn:hover {
+  background-color: var(--primary-500);
+}
+
+
+
+/* 공지사항 */
+ .notices p {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 50px;
+  padding: 8px 0;
+ }
+
+
+/* 출퇴근 */
+
+.work-timer {
+  align-items: center; /* 수평 가운데 정렬 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.work-timer .timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary);
+  border: 4px solid var(--primary);
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;  
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.commutes p .badge {
+  background-color: var(--primary-400);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.work-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.commutes .btn {
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.start-btn {
+  background-color: #28a745;
+}
+
+.start-btn:hover {
+  background-color: #218838;
+}
+
+.stop-btn {
+  background-color: #dc3545;
+}
+
+.stop-btn:hover {
+  background-color: #c82333;
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 50px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #28a745;
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+
+
+
+
+/* 근태현황 */
+
+.attends-list {
+  margin-bottom: 50px;
+}
+
+.attends-header,
+.attends-item {
+  display: grid;
+  grid-template-columns: 45px 90px 1fr 50px;
+  gap: 15px;
+  padding: 16px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.attends-item .badge {
+  background-color: var(--primary-400);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 15px;
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap; /*배지의 글자가 길어지지 않도록 설정*/
+}
+
+
+.attends-btn {
+  border-radius: 15px;
+  background-color: var(--primary-300);
+  float: right;
+}
+
+.attends-button:hover {
+  background-color: yellowgreen;
+}
+
+
+/* 모달 GPT꺼니까 다시 스스로 해보기 */
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  justify-content: center;
+  top:0;
+  left:0;
+
+  background-color: rgba(0,0,0,0.4); /*설명상으론 모달창이 띄어졌을때, 배경화면 흐리게 하는 것이라고 함*/
+}
+
+.modal-profile {
+  position:absolute;
+  top:50%; /*모달을 화면가운데 놓기위함*/
+  left: 40%;
+  padding:40px;  
+  width:400px;
+  height:600px;
+  
+  background-color: rgb(255,255,255); /*모달창 배경색 흰색*/
+  border-radius:10px; /*테두리*/
+  box-shadow:0 2px 3px 0 rgba(34,36,38,0.15); /*테두리 그림자*/
+  color: var(--primary);
+
+  transform:translateY(-50%); /*모듈창열었을때 위치설정 가운데로*/
+  left: 40%;
+
+}
+
+.modal-profile h2 {
+  margin-bottom: 30px;
+  text-align: start;
+}
+
+.modal-profile ul li {
+  margin-bottom: 30px;
+  text-align: start;
+}
+
+.close-modal-btn {
+  background-color: var(--primary-300);
+  border-radius: 15px;
+}
+
+.close-modal-btn:hover {
+  background-color: var(--primary-500);
+}
