@@ -4,15 +4,34 @@ import db from "../database.js";
 const router = express.Router();
 
 /**
+ * 유효성 검사 미들웨어
+ */
+const validateUserData = (req, res, next) => {
+  console.log("validate");
+  const { userId } = req.params;
+  const { password, email, name, team, position } = req.body;
+  //imgUrl은 필수 아닌 것 같아서 뺌
+  if (!userId || !password || !email || !name || !team || !position) {
+    return res.status(400).json({
+      status: "ERROR",
+      error: "All fields are required",
+    });
+  }
+
+  next();
+};
+
+/**
  * 사용자 전체조회
  */
 router.get("/", (req, res) => {
-  let sql = `SELECT userId, email, name, team, position, withdraw, isAdmin, imgUrl FROM Users `;
+  const sql = `
+    SELECT userId, email, name, team, position, isAdmin, imgUrl 
+    FROM Users 
+    WHERE isAdmin != true
+  `;
 
-  const { isAdmin } = req.body;
-  if (isAdmin !== undefined) sql += ` WHERE isAdmin = $1 `;
-
-  db.all(sql, [isAdmin], (err, rows) => {
+  db.all(sql, [], (err, rows) => {
     if (err) {
       return res.status(500).json({
         status: "ERROR",
@@ -33,10 +52,13 @@ router.get("/", (req, res) => {
 router.get("/:userId", (req, res) => {
   const { userId } = req.params;
 
-  const sql =
-    "SELECT userId, email, name, team, position, withdraw, isAdmin, imgUrl FROM Users WHERE userId=$1 ";
+  const sql = `
+    SELECT userId, email, name, team, position, isAdmin, imgUrl 
+    FROM Users 
+    WHERE userId=?
+  `;
 
-  db.all(sql, [userId], (err, rows) => {
+  db.get(sql, [userId], (err, row) => {
     if (err) {
       return res.status(500).json({
         status: "ERROR",
@@ -46,7 +68,8 @@ router.get("/:userId", (req, res) => {
 
     res.json({
       status: "OK",
-      data: rows,
+      message: `${row.userId}님의 정보를 갖고왔다이놈아콘솔서확인해`,
+      data: row,
     });
   });
 });
@@ -54,66 +77,72 @@ router.get("/:userId", (req, res) => {
 /**
  * 사용자 등록
  */
-router.post("/", (req, res) => {
-  const { userId, password, email, name, team, position, isAdmin, imgUrl } = req.body;
+router.post("/:userId", validateUserData, (req, res) => {
+  const { userId } = req.params;
+  const { password, email, name, team, position, imgUrl } = req.body;
 
-  try {
-    db.run(
-      ` INSERT INTO Users(id, userId, password, email, name, team, position, withdraw, isAdmin, imgUrl) 
-    VALUES((SELECT MAX(id)+1 FROM Users), $1, $2, $3, $4, $5, $6, false, $7, $8) `,
-      [userId, password, email, name, team, position, isAdmin, imgUrl]
-    );
+  // TODO: 중복 아이디가 있는지 먼저 확인
+  const sql = `
+    INSERT INTO Users( userId, password, email, name, team, position, imgUrl) 
+    VALUES( $userId, $password, $email, $name, $team, $position, $imgUrl)
+  `;
+
+  const params = {
+    $userId: userId,
+    $password: password,
+    $email: email,
+    $name: name,
+    $team: team,
+    $position: position,
+    $imgUrl: imgUrl,
+  };
+
+  db.run(sql, params, (err) => {
+    if (err) {
+      console.error("사용자 등록중 오류가 발생했습니다.", err);
+      return res.status(500).json({
+        status: "ERROR",
+        error: err.message,
+      });
+    }
 
     res.json({
       status: "REGISTER",
-      message: "사용자가 등록되었습니다.",
+      message: `${userId}가 등록되었습니다.`,
     });
-  } catch (err) {
-    console.error("사용자 등록중 오류가 발생했습니다.", err);
-    res.status(500).json({
-      status: "ERROR",
-      error: err.message,
-    });
-  }
+  });
 });
 
 /**
  * 사용자 수정
  */
-router.put("/", (req, res) => {
-  const { userId, password, email, name, team, position, isAdmin, imgUrl } = req.body;
+router.put("/:userId", validateUserData, (req, res) => {
+  const { userId } = req.params;
+  const { password, email, name, team, position, imgUrl } = req.body;
 
-  let updateSql = ` UPDATE Users SET `;
-  let params = [];
+  const updateSql = `
+    UPDATE Users SET 
+      password = $password,
+      email = $email,
+      name = $name,
+      team = $team,
+      position = $position,
+      imgUrl = $imgUrl
+    WHERE userId = $userId
+  `;
 
-  password !== undefined &&
-    params.push(password) &&
-    (updateSql += ` password = $${params.length}, `);
-  email !== undefined &&
-    params.push(email) &&
-    (updateSql += ` email = $${params.length}, `);
-  name !== undefined &&
-    params.push(name) &&
-    (updateSql += ` name = $${params.length}, `);
-  team !== undefined &&
-    params.push(team) &&
-    (updateSql += ` team = $${params.length}, `);
-  position !== undefined &&
-    params.push(position) &&
-    (updateSql += ` position = $${params.length}, `);
-  isAdmin !== undefined &&
-    params.push(isAdmin) &&
-    (updateSql += ` isAdmin = $${params.length}, `);
-  imgUrl !== undefined &&
-    params.push(imgUrl) &&
-    (updateSql += ` imgUrl = $${params.length}, `);
+  const params = {
+    $password: password,
+    $email: email,
+    $name: name,
+    $team: team,
+    $position: position,
+    $imgUrl: imgUrl,
+    $userId: userId,
+  };
 
-  params.push(userId);
-  updateSql += ` userId = $${params.length} WHERE userId = $${params.length} `;
-
-  db.run(updateSql, params, (err, rows) => {
+  db.run(updateSql, params, (err) => {
     if (err) {
-      console.error("사용자 정보 수정중 오류가 발생했습니다.", err);
       return res.status(500).json({
         status: "ERROR",
         error: err.message,
@@ -122,8 +151,7 @@ router.put("/", (req, res) => {
 
     res.json({
       status: "UPDATE",
-      message: "사용자 정보가 수정되었습니다.",
-      data: rows,
+      message: `${userId}님의 정보가 수정되었습니다.`,
     });
   });
 });
@@ -131,9 +159,14 @@ router.put("/", (req, res) => {
 /**
  * 사용자 삭제
  */
-router.delete("/", (req, res) => {
-  const sql = ` DELETE FROM Users WHERE userId = $1 `;
-  const { userId } = req.body;
+router.delete("/:userId", (req, res) => {
+  const { userId } = req.params;
+
+  // TODO: 관리자인지 확인
+  const sql = `
+    DELETE FROM Users 
+    WHERE userId = ? 
+  `;
 
   db.run(sql, [userId], (err, rows) => {
     if (err) {
@@ -154,10 +187,18 @@ router.delete("/", (req, res) => {
 router.get("/login", (req, res) => {
   const { userId, password } = req.body;
 
-  const sql =
-    "SELECT userId, email, name, team, position, isAdmin, imgUrl FROM Users WHERE userId=$1 and password = $2 and withdraw = false";
+  const sql = `
+    SELECT userId, email, name, team, position, isAdmin, imgUrl 
+    FROM Users 
+    WHERE userId=$userId and password = $password and withdraw = false
+  `;
 
-  db.all(sql, [userId, password], (err, rows) => {
+  const params = {
+    $userId: userId,
+    $password: password,
+  };
+
+  db.all(sql, params, (err, rows) => {
     if (err) {
       return res.status(500).json({
         status: "ERROR",
@@ -179,4 +220,4 @@ router.get("/login", (req, res) => {
   });
 });
 
-export default router
+export default router;

@@ -14,7 +14,7 @@ database.serialize(() => {
       team TEXT,
       position TEXT,
       imgUrl TEXT,
-      withdraw Boolean,
+      withdraw Boolean DEFAULT false,
       isAdmin Boolean DEFAULT false
     );
   `).run(`
@@ -30,7 +30,8 @@ database.serialize(() => {
       no INTEGER PRIMARY KEY AUTOINCREMENT,
       userId TEXT NOT NULL,
       startTime DATE NOT NULL,
-      endTime DATE
+      endTime DATE,
+      FOREIGN KEY (userId) REFERENCES Users(userId)
     );
   `).run(`
       CREATE TABLE IF NOT EXISTS attends (
@@ -40,7 +41,8 @@ database.serialize(() => {
       content TEXT NOT NULL,
       startDate DATE NOT NULL,
       endDate DATE NOT NULL,
-      type TEXT NOT NULL
+      type TEXT NOT NULL,
+      FOREIGN KEY (userId) REFERENCES Users(userId)
     );
   `);
 });
