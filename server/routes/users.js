@@ -22,6 +22,17 @@ const validateUserData = (req, res, next) => {
 };
 
 /**
+ * 에러 처리 함수
+ */
+const handleError = (res, err) => {
+  console.error(err);
+  return res.status(500).json({
+    status: "ERROR",
+    error: err.message,
+  });
+};
+
+/**
  * 사용자 전체조회
  */
 router.get("/", (req, res) => {
@@ -32,12 +43,7 @@ router.get("/", (req, res) => {
   `;
 
   db.all(sql, [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+    if (err) return handleError(res, err)
 
     res.json({
       status: "OK",
@@ -59,12 +65,7 @@ router.get("/:userId", (req, res) => {
   `;
 
   db.get(sql, [userId], (err, row) => {
-    if (err) {
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+    if (err) return handleError(res, err);
 
     res.json({
       status: "OK",
@@ -98,13 +99,7 @@ router.post("/:userId", validateUserData, (req, res) => {
   };
 
   db.run(sql, params, (err) => {
-    if (err) {
-      console.error("사용자 등록중 오류가 발생했습니다.", err);
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+    if (err) return handleError(res, err)
 
     res.json({
       status: "REGISTER",
@@ -142,12 +137,7 @@ router.put("/:userId", validateUserData, (req, res) => {
   };
 
   db.run(updateSql, params, (err) => {
-    if (err) {
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+    if (err) return handleError(res, err);
 
     res.json({
       status: "UPDATE",
@@ -169,12 +159,7 @@ router.delete("/:userId", (req, res) => {
   `;
 
   db.run(sql, [userId], (err, rows) => {
-    if (err) {
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+    if (err) return handleError(res, err)
 
     res.json({
       status: "DELETE",
@@ -199,12 +184,7 @@ router.get("/login", (req, res) => {
   };
 
   db.all(sql, params, (err, rows) => {
-    if (err) {
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+    if (err) return handleError(res, err);
 
     if (rows < 1) {
       return res.status(401).json({
