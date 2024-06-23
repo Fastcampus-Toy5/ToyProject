@@ -7,6 +7,9 @@ import commuteRouter from "./routes/commute.js";
 import noticeRouter from "./routes/notice.js";
 import userRouter from "./routes/users.js";
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger.js';
+
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -27,6 +30,8 @@ app.use(API_URL.user, userRouter);
 app.use(API_URL.notice, noticeRouter);
 app.use(API_URL.commute, commuteRouter);
 app.use(API_URL.attend, attendRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.listen(port, () => {
   console.log(`ready to ${port}`);

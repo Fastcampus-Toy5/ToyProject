@@ -3,9 +3,7 @@ import db from "../database.js";
 
 const router = express.Router();
 
-/**
- * 유효성 검사 미들웨어
- */
+// 유효성 검사 미들웨어
 const validateUserData = (req, res, next) => {
   console.log("validate");
   const { userId } = req.params;
@@ -21,9 +19,7 @@ const validateUserData = (req, res, next) => {
   next();
 };
 
-/**
- * 에러 처리 함수
- */
+// 에러 처리 함수
 const handleError = (res, err) => {
   console.error(err);
   return res.status(500).json({
@@ -33,7 +29,74 @@ const handleError = (res, err) => {
 };
 
 /**
- * 사용자 전체조회
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - userId
+ *         - password
+ *         - email
+ *         - name
+ *         - team
+ *         - position
+ *       properties:
+ *         userId:
+ *           type: string
+ *           description: 사번
+ *         password:
+ *           type: string
+ *           description: 비밀번호
+ *         email:
+ *           type: string
+ *           description: 사원의 e-mail
+ *         name:
+ *           type: string
+ *           description: 사원의 이름
+ *         team:
+ *           type: string
+ *           description: 사원의 소속 팀
+ *         position:
+ *           type: string
+ *           description: 사원의 직책
+ *         imgUrl:
+ *           type: string
+ *           description: 사원의 프로필 이미지 주소
+ *       example:
+ *         userId: kimpra2989
+ *         password: awesomepw
+ *         email: example@example.com
+ *         name: 강호연
+ *         team: delibery1
+ *         position: FE-lead
+ *         imgUrl: http://example.com/profile.jpg
+ */
+
+/** 
+ * @swagger 
+ * tags:
+ *   name: Users
+ *   description: 사원정보에 대한 API입니다.
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: 관리자를 제외한 모든 유저의 데이터를 가져옵니다
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: 정상
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       400:
+ *         description: 잘못된 요청
  */
 router.get("/", (req, res) => {
   const sql = `
@@ -54,6 +117,29 @@ router.get("/", (req, res) => {
 
 /**
  * 사용자 상세조회
+ */
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   get:
+ *     summary: Retrieve a single user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         description: 사번
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A single user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
  */
 router.get("/:userId", (req, res) => {
   const { userId } = req.params;
@@ -77,6 +163,36 @@ router.get("/:userId", (req, res) => {
 
 /**
  * 사용자 등록
+ */
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The created user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Bad request
  */
 router.post("/:userId", validateUserData, (req, res) => {
   const { userId } = req.params;
@@ -110,6 +226,36 @@ router.post("/:userId", validateUserData, (req, res) => {
 
 /**
  * 사용자 수정
+ */
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   put:
+ *     summary: Update an existing user
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: The updated user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
  */
 router.put("/:userId", validateUserData, (req, res) => {
   const { userId } = req.params;
@@ -148,6 +294,35 @@ router.put("/:userId", validateUserData, (req, res) => {
 
 /**
  * 사용자 삭제
+ */
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   delete:
+ *     summary: Delete a user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: The deleted user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: DELETE
+ *                 message:
+ *                   type: string
+ *                   example: 사용자 삭제됨
  */
 router.delete("/:userId", (req, res) => {
   const { userId } = req.params;
