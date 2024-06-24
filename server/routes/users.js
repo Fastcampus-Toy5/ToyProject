@@ -77,8 +77,9 @@ const handleError = (res, err) => {
  * @swagger
  * tags:
  *   name: Users
- *   description: 사원정보에 대한 API입니다.
+ *   description: 사원 정보에 대한 API입니다.
  */
+
 /**
  * @swagger
  * /api/users:

@@ -2,9 +2,9 @@ import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 
-import attendRouter from "./routes/attend.js";
-import commuteRouter from "./routes/commute.js";
-import noticeRouter from "./routes/notice.js";
+import attendRouter from "./routes/attends.js";
+import commuteRouter from "./routes/commutes.js";
+import noticeRouter from "./routes/notices.js";
 import userRouter from "./routes/users.js";
 
 import swaggerUi from 'swagger-ui-express';

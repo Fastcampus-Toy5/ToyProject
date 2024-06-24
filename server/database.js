@@ -18,7 +18,7 @@ database.serialize(() => {
       isAdmin Boolean DEFAULT false
     );
   `).run(`
-    CREATE TABLE IF NOT EXISTS notices (
+    CREATE TABLE IF NOT EXISTS Notices (
       no INTEGER PRIMARY KEY AUTOINCREMENT,
       subject TEXT NOT NULL,
       content TEXT,
@@ -26,7 +26,7 @@ database.serialize(() => {
       regDate DATE NOT NULL
     );
   `).run(`
-    CREATE TABLE IF NOT EXISTS commutes (
+    CREATE TABLE IF NOT EXISTS Commutes (
       no INTEGER PRIMARY KEY AUTOINCREMENT,
       userId TEXT NOT NULL,
       startTime DATE NOT NULL,
@@ -34,8 +34,8 @@ database.serialize(() => {
       FOREIGN KEY (userId) REFERENCES Users(userId)
     );
   `).run(`
-      CREATE TABLE IF NOT EXISTS attends (
-      no INTEGER PRIMARY KEY AUTOINCREMENT,
+    CREATE TABLE IF NOT EXISTS Attends (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       userId TEXT NOT NULL,
       subject TEXT NOT NULL,
       content TEXT NOT NULL,
