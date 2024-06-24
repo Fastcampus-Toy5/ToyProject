@@ -73,30 +73,29 @@ const handleError = (res, err) => {
  *         imgUrl: http://example.com/profile.jpg
  */
 
-/** 
- * @swagger 
+/**
+ * @swagger
  * tags:
  *   name: Users
  *   description: 사원정보에 대한 API입니다.
  */
-
 /**
  * @swagger
  * /api/users:
  *   get:
- *     summary: 관리자를 제외한 모든 유저의 데이터를 가져옵니다
+ *     summary: 관리자를 제외한 모든 사원의 데이터를 가져옵니다
  *     tags: [Users]
  *     responses:
  *       200:
- *         description: 정상
+ *         description: 모든 사원 정보
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/User'
- *       400:
- *         description: 잘못된 요청
+ *       500:
+ *         description: 네트워크 오류
  */
 router.get("/", (req, res) => {
   const sql = `
@@ -106,7 +105,7 @@ router.get("/", (req, res) => {
   `;
 
   db.all(sql, [], (err, rows) => {
-    if (err) return handleError(res, err)
+    if (err) return handleError(res, err);
 
     res.json({
       status: "OK",
@@ -116,13 +115,10 @@ router.get("/", (req, res) => {
 });
 
 /**
- * 사용자 상세조회
- */
-/**
  * @swagger
  * /api/users/{userId}:
  *   get:
- *     summary: Retrieve a single user by ID
+ *     summary: 특정 사원의 데이터를 가져옵니다
  *     tags: [Users]
  *     parameters:
  *       - name: userId
@@ -133,13 +129,13 @@ router.get("/", (req, res) => {
  *           type: string
  *     responses:
  *       200:
- *         description: A single user
+ *         description: 사원 정보
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       404:
- *         description: User not found
+ *         description: 해당 사번의 사원이 존재하지 않음
  */
 router.get("/:userId", (req, res) => {
   const { userId } = req.params;
@@ -153,6 +149,12 @@ router.get("/:userId", (req, res) => {
   db.get(sql, [userId], (err, row) => {
     if (err) return handleError(res, err);
 
+    if (!row)
+      return res.status(404).json({
+        status: "ERROR",
+        error: "User not found",
+      });
+
     res.json({
       status: "OK",
       message: `${row.userId}님의 정보를 갖고왔다이놈아콘솔서확인해`,
@@ -162,14 +164,10 @@ router.get("/:userId", (req, res) => {
 });
 
 /**
- * 사용자 등록
- */
-
-/**
  * @swagger
  * /api/users/{userId}:
  *   post:
- *     summary: Create a new user
+ *     summary: 사원을 등록합니다.
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -177,7 +175,7 @@ router.get("/:userId", (req, res) => {
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
+ *         description: 사번
  *     requestBody:
  *       required: true
  *       content:
@@ -186,7 +184,7 @@ router.get("/:userId", (req, res) => {
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: The created user
+ *         description: 사원이 생성됨
  *         content:
  *           application/json:
  *             schema:
@@ -215,7 +213,7 @@ router.post("/:userId", validateUserData, (req, res) => {
   };
 
   db.run(sql, params, (err) => {
-    if (err) return handleError(res, err)
+    if (err) return handleError(res, err);
 
     res.json({
       status: "REGISTER",
@@ -225,14 +223,10 @@ router.post("/:userId", validateUserData, (req, res) => {
 });
 
 /**
- * 사용자 수정
- */
-
-/**
  * @swagger
  * /api/users/{userId}:
  *   put:
- *     summary: Update an existing user
+ *     summary: 사원 정보를 수정합니다.
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -240,7 +234,7 @@ router.post("/:userId", validateUserData, (req, res) => {
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
+ *         description: 사번
  *     requestBody:
  *       required: true
  *       content:
@@ -254,8 +248,6 @@ router.post("/:userId", validateUserData, (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
- *       404:
- *         description: User not found
  */
 router.put("/:userId", validateUserData, (req, res) => {
   const { userId } = req.params;
@@ -293,14 +285,10 @@ router.put("/:userId", validateUserData, (req, res) => {
 });
 
 /**
- * 사용자 삭제
- */
-
-/**
  * @swagger
  * /api/users/{userId}:
  *   delete:
- *     summary: Delete a user by ID
+ *     summary: 특정 사원의 사원 정보를 삭제합니다.
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -308,7 +296,7 @@ router.put("/:userId", validateUserData, (req, res) => {
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
+ *         description: 사번
  *     responses:
  *       200:
  *         description: The deleted user
@@ -334,7 +322,7 @@ router.delete("/:userId", (req, res) => {
   `;
 
   db.run(sql, [userId], (err, rows) => {
-    if (err) return handleError(res, err)
+    if (err) return handleError(res, err);
 
     res.json({
       status: "DELETE",
