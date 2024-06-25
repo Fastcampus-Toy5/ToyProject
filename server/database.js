@@ -27,10 +27,11 @@ database.serialize(() => {
     );
   `).run(`
     CREATE TABLE IF NOT EXISTS Commutes (
-      no INTEGER PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       userId TEXT NOT NULL,
-      startTime DATE NOT NULL,
-      endTime DATE,
+      date DATE NOT NULL,
+      arriveTime TIME NOT NULL,
+      leaveTime TIME,
       FOREIGN KEY (userId) REFERENCES Users(userId)
     );
   `).run(`

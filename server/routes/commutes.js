@@ -3,19 +3,102 @@ import db from "../database.js";
 
 const router = express.Router();
 
+const getToday = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const today = `${year}-${month}-${day}`;
+  return today;
+};
+
+// 유효성 검사 미들웨어
+const validateCommuteData = (req, res, next) => {
+  const { userId, arriveTime } = req.body;
+  if (!userId || !arriveTime) {
+    return res.status(400).json({
+      status: "ERROR",
+      error: "userId와 arriveTime은 필수 항목입니다",
+    });
+  }
+  next();
+};
+
+// 에러 처리 함수
+const handleError = (res, err) => {
+  console.error(err);
+  return res.status(500).json({
+    status: "ERROR",
+    error: err.message,
+  });
+};
+
 /**
- * 출퇴근 전체조회
+ * @swagger
+ * components:
+ *   schemas:
+ *     Commute:
+ *       type: object
+ *       required:
+ *         - userId
+ *         - date
+ *         - arriveTime
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: 통근 기록의 자동 생성 ID
+ *         userId:
+ *           type: string
+ *           description: 사용자 ID
+ *         date:
+ *           type: string
+ *           description: 날짜
+ *         arriveTime:
+ *           type: string
+ *           format: date-time
+ *           description: 통근 시작 시간
+ *         leaveTime:
+ *           type: string
+ *           format: date-time
+ *           description: 통근 종료 시간
+ *       example:
+ *         id: 1
+ *         userId: kimpra2989
+ *         date: 2024-06-25
+ *         arriveTime: 09:00:00
+ *         leaveTime: 18:00:00
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Commutes
+ *   description: 출퇴근 기록 정보에 대한 API입니다.
+ */
+
+/**
+ * @swagger
+ * /api/commutes:
+ *   get:
+ *     summary: 모든 출퇴근 기록을 조회합니다
+ *     tags: [Commutes]
+ *     responses:
+ *       200:
+ *         description: 모든 출퇴근 기록 목록
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Commute'
+ *       500:
+ *         description: 서버 오류
  */
 router.get("/", (req, res) => {
-  let sql = ` SELECT no, userId, startTime, endTime FROM commutes `;
+  const sql = `SELECT * FROM Commutes`;
 
-  db.all(sql, (err, rows) => {
-    if (err) {
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
+  db.all(sql, [], (err, rows) => {
+    if (err) return handleError(res, err);
 
     res.json({
       status: "OK",
@@ -25,127 +108,274 @@ router.get("/", (req, res) => {
 });
 
 /**
- * 출퇴근 상세조회
+ * @swagger
+ * /api/commutes/{commuteId}:
+ *   get:
+ *     summary: ID로 특정 출퇴근 기록을 조회합니다
+ *     tags: [Commutes]
+ *     parameters:
+ *       - name: commuteId
+ *         in: path
+ *         description: 출퇴근 ID
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 출퇴근 기록
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Commute'
+ *       404:
+ *         description: 출퇴근 기록을 찾을 수 없음
  */
-router.get("/:no", (req, res) => {
-  const { no } = req.params;
+router.get("/:commuteId", (req, res) => {
+  const { commuteId } = req.params;
 
-  const sql =
-    " SELECT no, userId, startTime, endTime FROM commutes WHERE no = $1 ";
+  const sql = `SELECT * FROM Commutes WHERE id = ?`;
 
-  db.all(sql, [no], (err, rows) => {
-    if (err) {
-      return res.status(500).json({
+  db.get(sql, [commuteId], (err, row) => {
+    if (err) return handleError(res, err);
+
+    if (!row)
+      return res.status(404).json({
         status: "ERROR",
-        error: err.message,
+        error: "해당 출퇴근 기록을 찾을 수 없습니다",
       });
-    }
 
     res.json({
       status: "OK",
-      data: rows,
+      data: row,
     });
   });
 });
 
 /**
- * 출퇴근 등록
+ * @swagger
+ * /api/commutes/arrive:
+ *   post:
+ *     summary: 출근 시간을 기록합니다.(사원용)
+ *     tags: [Commutes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Commute'
+ *           example:
+ *             userId: kimpra2989
+ *             arriveTime: 09:00:00
+ *     responses:
+ *       200:
+ *         description: 출근 기록 생성
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Commute'
+ *             example:
+ *               status: success
+ *               message: 출근 처리 되었습니다
+ *               data: { id: 1 }
+ *       400:
+ *         description: 잘못된 요청
  */
-router.post("/", (req, res) => {
-  const { userId, startTime, endTime } = req.body;
+router.post("/arrive", validateCommuteData, (req, res) => {
+  const { userId, arriveTime } = req.body;
 
-  try {
-    db.run(
-      ` INSERT INTO commutes(no, userId, startTime, endTime) 
-        VALUES( (SELECT MAX(no)+1 FROM commutes), $1, $2, $3 ) `,
-      [userId, startTime, endTime]
-    );
+  const today = getToday();
+
+  const sql = `
+    INSERT INTO Commutes (userId, date, arriveTime)
+    VALUES (?, ?, ?)
+  `;
+
+  const params = [userId, today, arriveTime];
+
+  db.run(sql, params, function (err) {
+    if (err) return handleError(res, err);
 
     res.json({
-      status: "REGISTER",
-      message: "출퇴근이 등록되었습니다.",
-    });
-  } catch (err) {
-    console.error("출퇴근 등록중 오류가 발생했습니다.", err);
-    res.status(500).json({
-      status: "ERROR",
-      error: err.message,
-    });
-  }
-});
-
-/**
- * 출퇴근 수정
- */
-router.put("/", (req, res) => {
-  const { no, userId, startTime, endTime } = req.body;
-
-  if (!!!no || !!!userId) {
-    return res.status(500).json({
-      status: "ERROR",
-      error: "출퇴근 정보 수정중 오류가 발생했습니다.",
-    });
-  }
-
-  let updateSql = ` UPDATE commutes SET `;
-  let params = [];
-
-  startTime !== undefined &&
-    params.push(startTime) &&
-    (updateSql += ` startTime = $${params.length}, `);
-  endTime !== undefined &&
-    params.push(endTime) &&
-    (updateSql += ` endTime = $${params.length}, `);
-
-  params.push(no);
-  updateSql += ` no = $${params.length} WHERE no = $${params.length} `;
-  params.push(userId);
-  updateSql += ` AND userId = $${params.length} `;
-
-
-  db.run(updateSql, params, (err, rows) => {
-    if (err) {
-      console.error("출퇴근 정보 수정중 오류가 발생했습니다.", err);
-      return res.status(500).json({
-        status: "ERROR",
-        error: err.message,
-      });
-    }
-
-    res.json({
-      status: "UPDATE",
-      message: "출퇴근 정보가 수정되었습니다.",
-      data: rows,
+      status: "success",
+      message: `출근 처리 되었습니다`,
+      data: { id: this.lastID },
     });
   });
 });
 
 /**
- * 출퇴근 삭제
+ * @swagger
+ * /api/commutes/leave:
+ *   post:
+ *     summary: 퇴근 시간을 기록합니다 (사원용)
+ *     tags: [Commutes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Commute'
+ *           example:
+ *             userId: kimpra2989
+ *             leaveTime: 18:00:00
+ *     responses:
+ *       200:
+ *         description: 퇴근 기록 생성
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Commute'
+ *             example:
+ *               status: success
+ *               message: 퇴근 처리 되었습니다
+ *               data: { id: 1 }
+ *       400:
+ *         description: 잘못된 요청
  */
-router.delete("/", (req, res) => {
-  const sql = ` DELETE FROM commutes WHERE no = $1 `;
-  const { no } = req.body;
+router.post("/leave", (req, res) => {
+  const { userId, leaveTime } = req.body;
 
-  if (!!!no) {
-    return res.status(500).json({
+  // 레코드 업데이트
+  const sql = `
+  UPDATE Commutes SET 
+    leaveTime = ?
+  WHERE userId = ? and date = ?
+`;
+
+  const today = getToday();
+
+  const params = [leaveTime, userId, today];
+
+  db.run(sql, params, (err) => {
+    if (err) return handleError(res, err);
+
+    res.json({
+      status: "success",
+      message: `퇴근 처리 되었습니다`,
+    });
+  });
+});
+
+/**
+ * @swagger
+ * /api/commutes/{commuteId}:
+ *   put:
+ *     summary: ID로 특정 출퇴근 기록을 수정합니다.(관리자용)
+ *     tags: [Commutes]
+ *     parameters:
+ *       - name: commuteId
+ *         in: path
+ *         description: 출퇴근 ID
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Commute'
+ *     responses:
+ *       200:
+ *         description: 출퇴근 기록이 수정됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Commute'
+ */
+router.put("/:commuteId", (req, res) => {
+  const { commuteId } = req.params;
+  const { date, arriveTime, leaveTime } = req.body;
+
+  // body 유효성 검사
+  if (!date || !arriveTime || !leaveTime) {
+    return res.status(400).json({
       status: "ERROR",
-      error: "삭제할 대상을 지정해주세요.",
+      error: "date, arriveTime, leaveTime은 필수 항목입니다",
     });
   }
 
-  db.run(sql, [no], (err, rows) => {
-    if (err) {
-      return res.status(500).json({
+  if (!commuteId) {
+    return res.status(400).json({
+      status: "ERROR",
+      error: "commuteId가 필요합니다",
+    });
+  }
+
+  // commuteId 존재 여부 확인
+  const checkSql = `SELECT * FROM Commutes WHERE id = ?`;
+
+  db.get(checkSql, [commuteId], (err, row) => {
+    if (err) return handleError(res, err);
+
+    if (!row) {
+      return res.status(404).json({
         status: "ERROR",
-        error: err.message,
+        error: "해당 출퇴근 데이터가 존재하지 않습니다",
       });
     }
+
+    // 레코드 업데이트
+    const sql = `
+      UPDATE Commutes SET 
+        date = ?, 
+        arriveTime = ?, 
+        leaveTime = ?
+      WHERE id = ?
+    `;
+
+    const params = [date, arriveTime, leaveTime, commuteId];
+
+    db.run(sql, params, (err) => {
+      if (err) return handleError(res, err);
+
+      res.json({
+        status: "UPDATE",
+        message: `출퇴근 기록이 수정되었습니다`,
+      });
+    });
+  });
+});
+
+/**
+ * @swagger
+ * /api/commutes/{commuteId}:
+ *   delete:
+ *     summary: ID로 특정 출퇴근 기록을 삭제합니다
+ *     tags: [Commutes]
+ *     parameters:
+ *       - name: commuteId
+ *         in: path
+ *         description: 출퇴근 ID
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: 통근 기록이 삭제됨
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: DELETE
+ *                 message:
+ *                   type: string
+ *                   example: 통근 기록이 삭제되었습니다
+ */
+router.delete("/:commuteId", (req, res) => {
+  const { commuteId } = req.params;
+
+  const sql = `DELETE FROM Commutes WHERE id = ?`;
+
+  db.run(sql, [commuteId], (err) => {
+    if (err) return handleError(res, err);
 
     res.json({
       status: "DELETE",
-      message: "출퇴근이 삭제되었습니다.",
-      data: rows,
+      message: "출퇴근 기록이 삭제되었습니다",
     });
   });
 });
