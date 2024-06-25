@@ -7,7 +7,7 @@ const router = express.Router();
  * 근태 전체조회
  */
 router.get("/", (req, res) => {
-  let sql = ` SELECT no, userId, subject, content, startDate, endDate, type FROM attends `;
+  let sql = ` SELECT no, attends.userId, subject, content, startDate, endDate, type, name FROM attends JOIN users ON attends.userId = users.userId `;
 
   db.all(sql, (err, rows) => {
     if (err) {
@@ -31,7 +31,7 @@ router.get("/:no", (req, res) => {
   const { no } = req.params;
 
   const sql =
-    " SELECT no, userId, subject, content, startDate, endDate, type FROM attends WHERE no = $1 ";
+    " SELECT no, attends.userId, subject, content, startDate, endDate, type, name FROM attends JOIN users ON attends.userId = users.userId WHERE no = $1 ";
 
   db.all(sql, [no], (err, rows) => {
     if (err) {
