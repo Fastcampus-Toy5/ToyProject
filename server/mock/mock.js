@@ -2,6 +2,7 @@ import database from "../database.js";
 import mockUsers from "./user-data.js";
 import mockAttends from "./attend-data.js";
 import mockCommutes from "./commute-data.js";
+import mockNotices from "./notice-data.js";
 
 // 모의 데이터 삽입 함수
 const insertMockData = async () => {
@@ -51,6 +52,20 @@ const insertMockData = async () => {
         commute.date,
         commute.arriveTime,
         commute.leaveTime,
+      ]);
+    }
+
+    // notice data
+    for (const notice of mockNotices) {
+      const sql = `
+      INSERT INTO notices (subject, content, imgUrl, date)
+      VALUES (?, ?, ?, ?)
+    `;
+      database.run(sql, [
+        notice.subject,
+        notice.content,
+        notice.imgUrl,
+        notice.date,
       ]);
     }
   });

@@ -19,11 +19,11 @@ database.serialize(() => {
     );
   `).run(`
     CREATE TABLE IF NOT EXISTS Notices (
-      no INTEGER PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       subject TEXT NOT NULL,
       content TEXT,
       imgUrl TEXT,
-      regDate DATE NOT NULL
+      date DATE NOT NULL
     );
   `).run(`
     CREATE TABLE IF NOT EXISTS Commutes (
