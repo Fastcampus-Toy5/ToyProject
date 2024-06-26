@@ -1,4 +1,4 @@
-import { findAll } from "../api";
+import { AttendComp, findAll } from "../api";
 import ListItem from "./ListItem";
 
 const addElement = (prop, type) => {
@@ -49,7 +49,7 @@ const createList = (props) => {
     <div class="grid request-item">
     `);
 
-  props.list.map((item) => {
+  props.dataList.map((item) => {
     menuHtml.push(ListItem(item));
   });
 
@@ -123,95 +123,8 @@ const createList = (props) => {
 
 export default async function AttendList () {
 
-  const apiResult = await findAll();
-  const props = {
-    title: "근태관리 (관리자)",
-    select_options: [
-      {
-        value: "all",
-        text: "모두보기"
-      }, 
-      {
-        value: "leave",
-        text: "연차"
-      },
-      {
-        value: "halfday",
-        text: "반차"
-      },
-      {
-        value: "absent",
-        text: "조퇴"
-      }
-    ],
-    list_headers: [
-      "구분",
-      "일시",
-      "사원명",
-      "사유",
-      "수정/삭제"
-    ],
-    list: apiResult?.data
-  };
-
-  // const props2 = {
-  //   title: "근태관리 (관리자)",
-  //   select_options: [
-  //     {
-  //       value: "all",
-  //       text: "모두보기"
-  //     }, 
-  //     {
-  //       value: "leave",
-  //       text: "연차"
-  //     },
-  //     {
-  //       value: "halfday",
-  //       text: "반차"
-  //     },
-  //     {
-  //       value: "absent",
-  //       text: "조퇴"
-  //     }
-  //   ],
-  //   list_headers: [
-  //     "구분",
-  //     "일시",
-  //     "사원명",
-  //     "사유",
-  //     "수정/삭제"
-  //   ],
-  //   list: [
-  //     {
-  //       type: "연차",
-  //       startDate: "2024.06.25",
-  //       endDate: "2024.06.25",
-  //       name: "홍길동",
-  //       content: "개인사유"
-  //     }, 
-  //     {
-  //       type: "연차",
-  //       startDate: "2024.06.25",
-  //       endDate: "2024.06.25",
-  //       name: "홍길동",
-  //       content: "개인사유"
-  //     }, 
-  //     {
-  //       type: "연차",
-  //       startDate: "2024.06.25",
-  //       endDate: "2024.06.25",
-  //       name: "홍길동",
-  //       content: "개인사유"
-  //     }, 
-  //     {
-  //       type: "연차",
-  //       startDate: "2024.06.25",
-  //       endDate: "2024.06.25",
-  //       name: "홍길동",
-  //       content: "개인사유"
-  //     }
-  //   ]
-  // };
+  const {data} = await findAll();
+  const props = new AttendComp(data);
 
   const before = ``;
   const listHtml = createList(props).join('');

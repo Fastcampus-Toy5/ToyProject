@@ -6,7 +6,7 @@ const createItem = (prop) => {
     <span class="request-date"> ${prop.startDate} ~ ${prop.endDate}  </span>
   </div>
   <div>${prop.name}</div>
-  <div>${prop.content}</div>
+  <div>${prop.subject}</div>
   <div class="request-tools">
     <svg
       fill="none"
