@@ -15,6 +15,7 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(express.static("dist"));
+app.use(express.static("assets"));
 app.use(express.json());
 app.use(cors());
 

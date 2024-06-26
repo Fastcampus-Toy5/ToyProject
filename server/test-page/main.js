@@ -1,3 +1,5 @@
+import { HOST } from "../constants.js";
+
 const getAllUser = async () => {
   const res = await fetch("http://localhost:8080/api/users", {
     headers: {
@@ -110,3 +112,24 @@ const deleteUser = async (userId) => {
 document.getElementById("req").addEventListener("click", () => {
   editUser("kimpra3");
 });
+
+document
+  .getElementById("fetch-user-info")
+  .addEventListener("click", async () => {
+    const res = await fetch(`${HOST}/api/users/kimpra2989`);
+    const user = await res.json();
+
+    console.log(user)
+
+    const { email, imgUrl, name, position, team, userId } = user.data;
+
+    const profile = document.getElementById("profile-image");
+    document.getElementById("name").textContent = name;
+    document.getElementById("team").textContent = team;
+    document.getElementById("position").textContent = position;
+    document.getElementById("email").textContent = email;
+    document.getElementById("userId").textContent = userId;
+
+    const placeholder = "https://placehold.co/300x300";
+    profile.setAttribute("src", imgUrl ?? placeholder);
+  });
