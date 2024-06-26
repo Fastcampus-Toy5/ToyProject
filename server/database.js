@@ -14,33 +14,36 @@ database.serialize(() => {
       team TEXT,
       position TEXT,
       imgUrl TEXT,
-      withdraw Boolean,
+      withdraw Boolean DEFAULT false,
       isAdmin Boolean DEFAULT false
     );
   `).run(`
-    CREATE TABLE IF NOT EXISTS notices (
-      no INTEGER PRIMARY KEY AUTOINCREMENT,
+    CREATE TABLE IF NOT EXISTS Notices (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       subject TEXT NOT NULL,
       content TEXT,
       imgUrl TEXT,
-      regDate DATE NOT NULL
+      date DATE NOT NULL
     );
   `).run(`
-    CREATE TABLE IF NOT EXISTS commutes (
-      no INTEGER PRIMARY KEY AUTOINCREMENT,
+    CREATE TABLE IF NOT EXISTS Commutes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       userId TEXT NOT NULL,
-      startTime DATE NOT NULL,
-      endTime DATE
+      date DATE NOT NULL,
+      arriveTime TIME NOT NULL,
+      leaveTime TIME,
+      FOREIGN KEY (userId) REFERENCES Users(userId)
     );
   `).run(`
-      CREATE TABLE IF NOT EXISTS attends (
-      no INTEGER PRIMARY KEY AUTOINCREMENT,
+    CREATE TABLE IF NOT EXISTS Attends (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       userId TEXT NOT NULL,
       subject TEXT NOT NULL,
       content TEXT NOT NULL,
       startDate DATE NOT NULL,
       endDate DATE NOT NULL,
-      type TEXT NOT NULL
+      type TEXT NOT NULL,
+      FOREIGN KEY (userId) REFERENCES Users(userId)
     );
   `);
 });
