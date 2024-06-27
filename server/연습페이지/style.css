@@ -1,0 +1,36 @@
+#profile {
+  width: 900px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+  gap: 128px;
+  margin: auto;
+  margin-top: 40px;
+  border-radius: 6px;
+  padding: 30px 20px;
+  text-align: left;
+}
+
+#image-container {
+  width: 300px;
+}
+
+.user-info {
+  flex: 1;
+}
+
+p {
+  display: flex;
+  font-size: 24px;
+}
+
+p span {
+  width: fit-content;
+  display: block;
+  margin-left: auto;
+}
+
+.image-container img {
+  width: 100%;
+  display: block;
+}
